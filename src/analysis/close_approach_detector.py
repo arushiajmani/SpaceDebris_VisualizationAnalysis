@@ -11,10 +11,9 @@ def compute_distance(p1, p2):
         (p1["y"] - p2["y"])**2 +
         (p1["z"] - p2["z"])**2
     )
-def detect_close_approaches(positions_data, threshold_km=10):
+def detect_close_approaches(positions_data, threshold_km=100):
 
     satellites = positions_data["satellites"]
-
     sat_names = list(satellites.keys())
 
     warnings = []
@@ -28,6 +27,9 @@ def detect_close_approaches(positions_data, threshold_km=10):
             traj_a = satellites[sat_a]
             traj_b = satellites[sat_b]
 
+            min_distance = float("inf")
+            closest_time = None
+
             for k in range(len(traj_a)):
 
                 pos_a = traj_a[k]["position_km"]
@@ -35,16 +37,23 @@ def detect_close_approaches(positions_data, threshold_km=10):
 
                 distance = compute_distance(pos_a, pos_b)
 
-                if distance < threshold_km:
+                # track the closest approach
+                if distance < min_distance:
+                    min_distance = distance
+                    closest_time = traj_a[k]["time"]
 
-                    warnings.append({
-                        "satellite_a": sat_a,
-                        "satellite_b": sat_b,
-                        "distance_km": distance,
-                        "time": traj_a[k]["time"]
-                    })
+            # check threshold AFTER finding closest distance
+            if min_distance < threshold_km and min_distance > 0.001:
+
+                warnings.append({
+                    "satellite_a": sat_a,
+                    "satellite_b": sat_b,
+                    "distance_km": min_distance,
+                    "time": closest_time
+                })
 
     return warnings
+
 
 import json
 

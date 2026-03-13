@@ -61,7 +61,7 @@ def main():
     log(f"[PARSE] Parsed {len(satellites)} satellites")
 
     # limit dataset
-    satellites = satellites[:150]
+    satellites = satellites[:250]
 
     log(f"[PARSE] Using {len(satellites)} satellites for simulation")
 
@@ -125,7 +125,7 @@ def main():
     log("[PROPAGATE] Saved positions.json")
     log("[ANALYSIS] Detecting close approaches")
 
-    warnings = detect_close_approaches(positions_output, threshold_km=10)
+    warnings = detect_close_approaches(positions_output, threshold_km=500)
 
     log(f"[ANALYSIS] Found {len(warnings)} potential close approaches")
 
