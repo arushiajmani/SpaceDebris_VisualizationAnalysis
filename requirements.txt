@@ -1,4 +1,12 @@
-requests
-numpy
-skyfield
-plotly
+certifi==2026.2.25
+charset-normalizer==3.4.5
+idna==3.11
+jplephem==2.24
+narwhals==2.18.0
+numpy==2.2.6
+packaging==26.0
+plotly==6.6.0
+requests==2.32.5
+sgp4==2.25
+skyfield==1.54
+urllib3==2.6.3
