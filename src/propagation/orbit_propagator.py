@@ -38,9 +38,12 @@ def propagate_positions(satellites, times):
             position = geocentric.position.km
 
             sat_positions.append({
-                "x": float(position[0]),
-                "y": float(position[1]),
-                "z": float(position[2])
+                "time": t.utc_iso(),
+                "position_km": {
+                    "x": float(position[0]),
+                    "y": float(position[1]),
+                    "z": float(position[2])
+                }
             })
 
         positions[sat.name] = sat_positions
