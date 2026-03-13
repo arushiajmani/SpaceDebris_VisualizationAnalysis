@@ -5,7 +5,7 @@ from propagation.orbit_propagator import (
     generate_time_steps,
     propagate_positions
 )
-
+from analysis.close_approach_detector import detect_close_approaches, save_warnings
 import json
 import os
 from datetime import datetime
@@ -61,7 +61,7 @@ def main():
     log(f"[PARSE] Parsed {len(satellites)} satellites")
 
     # limit dataset
-    satellites = satellites[:50]
+    satellites = satellites[:150]
 
     log(f"[PARSE] Using {len(satellites)} satellites for simulation")
 
@@ -123,7 +123,15 @@ def main():
         json.dump(positions_output, f, indent=2)
 
     log("[PROPAGATE] Saved positions.json")
+    log("[ANALYSIS] Detecting close approaches")
 
+    warnings = detect_close_approaches(positions_output, threshold_km=10)
+
+    log(f"[ANALYSIS] Found {len(warnings)} potential close approaches")
+
+    save_warnings(warnings, f"{DEBUG_DIR}/warnings.json")
+
+    log("[ANALYSIS] Saved warnings.json")
 
 # ---------- Entry Point ----------
 
