@@ -9,6 +9,7 @@ from analysis.close_approach_detector import detect_close_approaches, save_warni
 import json
 import os
 from datetime import datetime
+from visualization.orbit_visualizer import visualize
 
 
 # ---------- Logging ----------
@@ -132,6 +133,9 @@ def main():
     save_warnings(warnings, f"{DEBUG_DIR}/warnings.json")
 
     log("[ANALYSIS] Saved warnings.json")
+#Visualise
+    log("[VISUALIZE] Launching orbit visualization")
+    visualize(f"{DEBUG_DIR}/positions.json")
 
 # ---------- Entry Point ----------
 
