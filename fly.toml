@@ -1,0 +1,27 @@
+# fly.toml — OrbitWatch on Fly.io
+# Deploy: fly launch (first time) or fly deploy (subsequent)
+
+app = "orbitwatch"          # change to your chosen app name
+primary_region = "bom"      # Mumbai — closest to India
+
+[build]
+
+[http_service]
+  internal_port        = 8050
+  force_https          = true
+  auto_stop_machines   = false   # IMPORTANT: keep alive for background scheduler
+  auto_start_machines  = true
+  min_machines_running = 1
+
+[[vm]]
+  memory = "512mb"    # free tier allows 256mb shared; 512mb recommended
+  cpus   = 1
+
+# Persistent volume for debug/ files
+# Create once with: fly volumes create orbitwatch_data --size 1
+[[mounts]]
+  source      = "orbitwatch_data"
+  destination = "/app/debug"
+
+[env]
+  PORT = "8050"

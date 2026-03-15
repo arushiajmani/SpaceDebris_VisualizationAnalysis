@@ -30,8 +30,9 @@ def build_layout(store: DataStore) -> html.Div:
         }),
 
         # ── Timers ────────────────────────────────────────────────────────────
-        dcc.Interval(id="clock-interval",     interval=1_000, n_intervals=0),
+        dcc.Interval(id="clock-interval",     interval=5_000, n_intervals=0),
         dcc.Interval(id="animation-interval", interval=600,   n_intervals=0, disabled=True),
+        dcc.Interval(id="log-interval",        interval=2_000, n_intervals=0, disabled=True),
 
         _topbar(store),
         html.Div(id="body", children=[
@@ -43,6 +44,7 @@ def build_layout(store: DataStore) -> html.Div:
         _conj_modal(),
         _risk_modal(),
         _info_modal(store),
+        _log_modal(),
     ])
 
 
@@ -75,6 +77,8 @@ def _topbar(store: DataStore) -> html.Header:
         ]),
 
         html.Button("ℹ", id="info-btn", n_clicks=0, className="info-btn"),
+        html.Button("⬡", id="log-btn",  n_clicks=0, className="info-btn log-btn",
+                    title="Pipeline logs"),
 
         html.Div(id="alert-badge-div",
                  style={"marginLeft":"auto","display":"flex","gap":"6px",
@@ -146,8 +150,16 @@ def _sidebar(store: DataStore) -> html.Nav:
         html.Div(className="sat-meta-note", children=[
             html.Span(f"max {MAX_SATELLITES}  ·  step 10", className="sat-meta-line"),
             html.Span(id="tle-freshness-note", className="sat-meta-line sat-meta-fresh",
-                      children=f"TLE fetched {store.sim_start[:10]}  ·  static this session"),
+                      children=f"TLE {store.sim_start[:10]}  {store.sim_start[11:16]} UTC  ·  ↻ 24h"),
         ]),
+
+        html.Hr(className="sidebar-hr"),
+
+        # TLE refresh
+        html.Div("TLE DATA", className="section-label"),
+        html.Button("⟳  REFRESH TLE", id="tle-refresh-btn", n_clicks=0,
+                    className="refresh-btn"),
+        html.Div(id="refresh-status", className="refresh-status"),
 
         html.Hr(className="sidebar-hr"),
 
@@ -248,7 +260,6 @@ def _center(store: DataStore) -> html.Main:
             dcc.Slider(id="time-slider", min=0, max=store.duration - 1,
                        step=1, value=0, marks=marks,
                        className="tl-scrubber",
-                       tooltip={"always_visible": False},
                        updatemode="mouseup"),
             html.Div(id="tl-time-current", className="tl-label tl-label-current",
                      children="T+00:00"),
@@ -344,6 +355,25 @@ def _risk_modal() -> html.Div:
                 html.Button("✕", id="close-risk-modal", n_clicks=0, className="modal-close"),
             ]),
             html.Div(id="risk-modal-content", className="modal-content risk-content"),
+        ]),
+    ])
+
+
+def _log_modal() -> html.Div:
+    return html.Div(id="log-modal", className="modal-overlay modal-hidden", children=[
+        html.Div(className="modal-box modal-box-log", children=[
+            html.Div(className="modal-header", children=[
+                html.Span("PIPELINE LOGS", className="modal-title"),
+                html.Span(id="log-modal-subtitle", className="modal-subtitle",
+                          children="auto-refreshes every 2s"),
+                html.Button("🗑", id="clear-log-btn", n_clicks=0,
+                            className="modal-close",
+                            style={"marginLeft":"0","border":"1px solid rgba(72,165,255,0.3)",
+                                   "color":"#48a5ff","background":"rgba(72,165,255,0.08)"},
+                            title="Clear logs"),
+                html.Button("✕", id="close-log-modal", n_clicks=0, className="modal-close"),
+            ]),
+            html.Div(id="log-content", className="modal-content log-content"),
         ]),
     ])
 

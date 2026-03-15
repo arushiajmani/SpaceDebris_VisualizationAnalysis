@@ -10,4 +10,5 @@ requests==2.32.5
 sgp4==2.25
 skyfield==1.54
 urllib3==2.6.3
-dash
+dash>=2.14.0
+gunicorn>=21.2.0

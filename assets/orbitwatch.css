@@ -231,12 +231,19 @@
    }
    
    /* Kill ALL tooltip boxes from rc-slider — they are always ugly */
-   .rc-slider-tooltip,
-   .rc-slider-tooltip-inner { display: none !important; opacity: 0 !important; }
+   [class*="rc-slider-tooltip"] {
+     display: none !important;
+     visibility: hidden !important;
+     opacity: 0.5 !important;
+     color:rgba(8, 14, 26, 0.90);
+     pointer-events: none !important;
+     width: 0 !important;
+     height: 0 !important;
+   }
    
    /* Timeline mark labels */
    .tl-scrubber .rc-slider-mark-text {
-     color: #4a6080 !important;
+     color: #020509 !important;
      font-family: 'Space Mono', monospace !important;
      font-size: 9px !important;
    }
@@ -359,6 +366,11 @@
      color: #4a7a60;  /* dim green — data is static/stale */
    }
    
+   .sat-meta-dim {
+     color: #2a4055;
+     font-family: var(--font-m);
+     font-size: 8px;
+   }
    /* ── Conjunction cards ────────────────────────────────────────── */
    #conj-list { display: flex; flex-direction: column; gap: 7px; margin-bottom: 4px; }
    
@@ -551,6 +563,12 @@
    /* ── Hide Dash built-in undo/redo button (the << circle) ─────── */
    ._dash-undo-redo { display: none !important; }
    
+   /* ── Hide Dash "Server Unavailable" error overlay ────────────── */
+   ._dash-error-menu__content,
+   ._dash-error-menu,
+   #_dash-error-menu,
+   .dash-error-card,
+   .dash-debug-menu { display: none !important; }
    /* ── Floating globe controls ──────────────────────────────────── */
    #globe-controls {
      position: absolute;
@@ -615,3 +633,78 @@
      letter-spacing: 0.5px;
      color: #3a5570;
    }
+   /* ── TLE Refresh button ───────────────────────────────────────── */
+   .refresh-btn {
+     width: 100%;
+     padding: 7px 0;
+     background: rgba(0,229,192,0.08);
+     border: 1px solid rgba(0,229,192,0.3);
+     border-radius: 8px;
+     color: var(--teal);
+     font-family: var(--font-m);
+     font-size: 10px;
+     letter-spacing: 1.5px;
+     cursor: pointer;
+     transition: all 0.15s;
+     margin-bottom: 6px;
+   }
+   .refresh-btn:hover {
+     background: rgba(0,229,192,0.18);
+     box-shadow: 0 0 10px rgba(0,229,192,0.2);
+   }
+   .refresh-btn:active {
+     transform: scale(0.98);
+   }
+   .refresh-status {
+     font-family: var(--font-m);
+     font-size: 9px;
+     color: var(--teal);
+     min-height: 14px;
+     line-height: 1.4;
+   }
+   /* Log button in topbar */
+   .log-btn { color: var(--muted) !important; }
+   .log-btn:hover { color: var(--teal) !important; }
+   /* ── Log modal ────────────────────────────────────────────────── */
+   .modal-box-log { width: min(760px, 92vw); }
+   .log-content {
+     background: #020509;
+     font-family: var(--font-m);
+     font-size: 11px;
+     display: flex;
+     flex-direction: column;
+     gap: 1px;
+   }
+    .log-empty {
+     color: var(--muted);
+     font-family: var(--font-m);
+     font-size: 11px;
+     padding: 20px 0;
+     text-align: center;
+   }
+   .log-row {
+     display: flex;
+     gap: 12px;
+     padding: 4px 6px;
+     border-radius: 4px;
+     align-items: baseline;
+     transition: background 0.1s;
+   }
+   .log-row:hover { background: rgba(255,255,255,0.03); }
+   .log-time {
+     color: #3a5570;
+     font-size: 10px;
+     flex-shrink: 0;
+     width: 60px;
+   }
+   .log-msg  { color: #8899bb; font-size: 11px; line-height: 1.5; }
+   /* Colour by level */
+   .log-info  .log-msg { color: #7a9abc; }
+   .log-info  .log-time { color: #3a5570; }
+   .log-warn  .log-msg  { color: var(--amber); }
+   .log-warn  .log-time { color: #7a5020; }
+   .log-error .log-msg  { color: var(--red); }
+   .log-error .log-time { color: #7a2030; }
+   /* Highlight key pipeline stages */
+   .log-row:has(.log-msg):has([class*="FETCH"])    .log-msg { color: #48a5ff; }
+   .log-row:has(.log-msg):has([class*="DONE"])     .log-msg { color: var(--teal); font-weight: 700; }
