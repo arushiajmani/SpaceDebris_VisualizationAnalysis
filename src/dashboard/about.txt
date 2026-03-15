@@ -1,0 +1,15 @@
+src/dashboard/
+OrbitWatch dashboard package.
+
+Structure:
+  config.py       — all constants, thresholds, colours
+  data_store.py   — file I/O, bootstrap, Pc recompute
+  components.py   — pure UI builder functions (cards, markers, tables)
+  layout.py       — full Dash layout tree
+  callbacks/
+    __init__.py   — register_all(app, store)
+    playback.py   — play/pause, slider advance
+    orbit.py      — globe update, recolor, zoom, clock
+    satellites.py — +/- counter, SET re-propagation
+    filters.py    — Pc + distance filter
+    modals.py     — TLE DB, Conjunction Events, Risk Dashboard, Info
