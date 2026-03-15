@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: spacedebris
+    runtime: docker
+    plan: free
+    branch: main
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: 8080
