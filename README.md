@@ -129,7 +129,7 @@ SpaceDebris_VisualizationAnalysis/
 
 | Environment Variable | Default | Description |
 |---|---|---|
-| `PORT` | `8050` | Port the app listens on |
+| `PORT` | `10000` | Port the app listens on |
 
 The TLE refresh interval is set in `app.py`:
 ```python
