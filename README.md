@@ -7,10 +7,11 @@
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Dash](https://img.shields.io/badge/Plotly_Dash-2.14+-00B4D8?style=for-the-badge&logo=plotly&logoColor=white)](https://dash.plotly.com)
 [![Skyfield](https://img.shields.io/badge/Skyfield-1.54-blueviolet?style=for-the-badge)](https://rhodesmill.org/skyfield/)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://spacedebris-visualizationanalysis.onrender.com/)
 
 > **Track thousands of satellites and debris objects in Earth orbit — live, in your browser.**  
 > OrbitWatch ingests real Two-Line Element (TLE) data, propagates orbital mechanics with SGP4, detects conjunction events by severity, and renders everything in an interactive 3-D dashboard.
-
+### 🌐 [Live Demo → spacedebris-visualizationanalysis.onrender.com](https://spacedebris-visualizationanalysis.onrender.com/)
 ---
 
 </div>
